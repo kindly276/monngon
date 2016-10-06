@@ -1,0 +1,38 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dialog_corner"
+    >
+
+    <!-- The Title Bar -->
+
+
+    <TextView
+        android:id="@+id/popup_choice_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:textStyle="bold"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="14dp"
+        android:layout_marginLeft="24dp"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
+    <!-- Divider -->
+
+
+
+    <!-- Listview -->
+
+    <ListView
+        android:id="@+id/popup_choice_list"
+        android:layout_below="@+id/popup_choice_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:dividerHeight="0dp"
+        android:background="@android:color/white" >
+    </ListView>
+
+</RelativeLayout>

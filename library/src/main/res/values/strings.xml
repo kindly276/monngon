@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">library</string>
+    <string name="st_ok">Đồng ý</string>
+    <string name="st_cancel">Bỏ qua</string>
+    <string name="no_connection">Không có kết nối mạng nhấn vào đây để thử lại </string>
+    <string name="st_press_back_to_exit">Ấn back một lần nữa để thoát ứng dụng</string>
+    <string name="please_waiting_loading">Vui lòng chờ...</string>
+    <string name="st_edit_person">Sửa thông tin cá nhân</string>
+    <string name="st_address">Địa chỉ cá nhân</string>
+    <string name="st_new_managing">Quản lý tin đăng</string>
+    <string name="st_logout">Thoát</string>
+    <string name="btnRetry">Thử lại</string>
+    <string name="st_confirm_logout">Bạn có muốn đăng xuất khỏi hệ thống không?</string>
+    <string name="st_notify">Thông báo</string>
+    <string name="st_utility">Tiện ích :</string>
+
+    <string name="st_address_project">Địa chỉ :</string>
+    <string name="message_wrong_format_email">Email sai định dạng</string>
+    <string name="message_please_wrong_phone">Số điện thoại không hợp lệ</string>
+    <string name="gps_network_not_enabled">GPS chưa được bật, vui lòng bật GPS để xác định vị trí hiện tại</string>
+    <string name="st_setting">Cài đặt</string>
+
+
+    <!--the default font-->
+    <string name="fontFamily__roboto_regular">sans-serif</string>
+    <string name="fontFamily__roboto_light">sans-serif-light</string>
+    <string name="fontFamily__roboto_condensed">sans-serif-condensed</string>
+    <!--+++++++++++++++++++++++++++++-->
+    <!--added on API 17 (JBMR1 - 4.2)-->
+    <!--+++++++++++++++++++++++++++++-->
+    <string name="fontFamily__roboto_thin">sans-serif-thin</string>
+    <!--+++++++++++++++++++++++++++-->
+    <!--added on Lollipop (LL- 5.0)-->
+    <!--+++++++++++++++++++++++++++-->
+    <string name="fontFamily__roboto_medium">sans-serif-medium</string>
+    <string name="fontFamily__roboto_black">sans-serif-black</string>
+    <string name="fontFamily__roboto_condensed_light">sans-serif-condensed-light</string>
+
+    <string name="no_data">Chúng tôi đang cập nhật thông tin</string>
+    <string name="error_entry">Có lỗi xảy ra nhấn vào đây để thử lại</string>
+    <string name="error">Có lỗi xảy</string>
+</resources>
