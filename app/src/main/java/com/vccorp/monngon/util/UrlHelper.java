@@ -5,5 +5,5 @@ package com.vccorp.monngon.util;
  */
 
 public class UrlHelper {
-    public static String UrlCommon="https://example-a8e7a.firebaseio.com/mon.json";
+    public static String UrlCommon="http://10.0.2.2:8080/monngon/get_all_products.php";
 }
