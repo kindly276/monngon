@@ -7,18 +7,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.thaond.library.util.Utils;
 import com.vccorp.monngon.MainActivity;
 import com.vccorp.monngon.R;
-import com.vccorp.monngon.util.UrlHelper;
+import com.vccorp.monngon.adapter.HomeAdapter;
+import com.vccorp.monngon.model.HomeMenu;
+import com.vccorp.monngon.model.HomeReponse;
+import com.vccorp.monngon.util.ApiClient;
+import com.vccorp.monngon.util.ApiInterface;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 
 /**
@@ -30,20 +35,15 @@ public class HomeFragment extends Fragment {
     private MainActivity mainActivity;
     private RecyclerView rvSupport;
     private LinearLayoutManager mLayoutManager;
-    private ArrayList<Support> supportArrayList;
-    private ArrayList<Support> tmpSupportArrayList;
+    private ArrayList<HomeMenu> supportArrayList;
+    private ArrayList<HomeMenu> tmpSupportArrayList;
 
-    private boolean isNetworkError, isNoConnection, isNoData, isUnAuthenticated, isRefresh, isOutOfData, isLoadMore;
+    private boolean isNetworkError, isNoConnection, isNoData;
     private TextView txtError;
     private ProgressBar pgLoading;
 
     private RequestQueue queue;
-    private ListSupportAdapter custommerAdapter;
-    private int pageId = 1;
-    private boolean loading = true;
-    int pastVisiblesItems, visibleItemCount, totalItemCount;
-    private String role;
-    private LinearLayout layout_search;
+    private HomeAdapter custommerAdapter;
 
     public static HomeFragment newInstance() {
         HomeFragment myFragment = new HomeFragment();
@@ -55,21 +55,21 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mainActivity = (MainActivity) getActivity();
-        mView = inflater.inflate(R.layout.fragment_list_support, container, false);
+        mView = inflater.inflate(R.layout.fragment_home, container, false);
 
 
         txtError = (TextView) mView.findViewById(R.id.txtError);
         pgLoading = (ProgressBar) mView.findViewById(R.id.pgLoading);
-        rvSupport = (RecyclerView) mView.findViewById(R.id.recycle_list_support);
+        rvSupport = (RecyclerView) mView.findViewById(R.id.rv_home);
         rvSupport.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         // use a linear layout manager
         rvSupport.setLayoutManager(mLayoutManager);
 
-        supportArrayList = new ArrayList<Support>();
-        tmpSupportArrayList = new ArrayList<Support>();
-        custommerAdapter = new ListSupportAdapter(supportArrayList, mainActivity);
+        supportArrayList = new ArrayList<HomeMenu>();
+        tmpSupportArrayList = new ArrayList<HomeMenu>();
+        custommerAdapter = new HomeAdapter(supportArrayList, mainActivity);
         rvSupport.setAdapter(custommerAdapter);
         initOnClickListener();
         showDoGetListCustommer();
@@ -87,7 +87,6 @@ public class HomeFragment extends Fragment {
                     isNoConnection = false;
                     txtError.setVisibility(View.GONE);
                     pgLoading.setVisibility(View.VISIBLE);
-                    pageId = 1;
                     showDoGetListCustommer();
                 }
             }
@@ -97,31 +96,56 @@ public class HomeFragment extends Fragment {
 
 
     private void doGetListSupportFirst() {
-        queue = Constants.getQueue(mainActivity);
+//        queue = Constants.getQueue(mainActivity);
+//
+//        GsonRequest<ListSupport> postRequest = new GsonRequest<ListSupport>(
+//                Request.Method.GET, UrlHelper.getProducts, ListSupport.class, null, null,
+//                new Response.Listener<ListSupport>() {
+//                    public void onResponse(ListSupport response) {
+//                        processSupportResponse(response);
+//                    }
+//                }, new Response.ErrorListener(
+//
+//        ) {
+//            public void onErrorResponse(VolleyError error) {
+//                isNetworkError = true;
+//                displayCustommertFirst();
+//            }
+//        });
+//        queue.add(postRequest);
 
-        GsonRequest<ListSupport> postRequest = new GsonRequest<ListSupport>(
-                Request.Method.GET, UrlHelper.GET_SUPPORT_PROJECT, ListSupport.class, null, null,
-                new Response.Listener<ListSupport>() {
-                    public void onResponse(ListSupport response) {
-                        processSupportResponse(response);
-                    }
-                }, new Response.ErrorListener(
 
-        ) {
-            public void onErrorResponse(VolleyError error) {
+
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<HomeReponse> call = apiService.getHome();
+        call.enqueue(new Callback<HomeReponse>() {
+
+            @Override
+            public void onResponse(Call<HomeReponse> call, retrofit2.Response<HomeReponse> response) {
+                Utils.logE("thaond","abc"+response.body().toString());
+
+                processSupportResponse(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<HomeReponse> call, Throwable t) {
                 isNetworkError = true;
                 displayCustommertFirst();
             }
         });
-        queue.add(postRequest);
     }
 
-    private void processSupportResponse(ListSupport messages) {
+
+    private void processSupportResponse(HomeReponse messages) {
         try {
             tmpSupportArrayList.clear();
-            if (messages.getStatus() == 1) {
-                if (messages.getSupport() != null && messages.getSupport().size() > 0) {
-                    tmpSupportArrayList.addAll(messages.getSupport());
+            if (messages.getSuccess() == 1) {
+                if (messages.getMons() != null && messages.getMons().size() > 0) {
+                    HomeMenu homeMenu=new HomeMenu();
+                    homeMenu.setListMon(messages.getMons());
+                    tmpSupportArrayList.add(homeMenu);
                     isNetworkError = false;
                 } else {
                     isNoData = true;
@@ -152,8 +176,6 @@ public class HomeFragment extends Fragment {
                         txtError.setText(mainActivity.getResources().getString(R.string.no_connection));
                     } else if (isNoData) {
                         txtError.setText(mainActivity.getResources().getString(R.string.no_data));
-                    } else if (isUnAuthenticated) {
-                        txtError.setText(mainActivity.getResources().getString(R.string.un_authenticated));
                     } else {
                         txtError.setText(mainActivity.getResources().getString(R.string.error));
                     }

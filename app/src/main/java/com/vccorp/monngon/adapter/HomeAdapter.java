@@ -1,16 +1,19 @@
 package com.vccorp.monngon.adapter;
 
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import com.thaond.library.util.Utils;
+import com.vccorp.monngon.MainActivity;
 import com.vccorp.monngon.R;
 import com.vccorp.monngon.model.HomeMenu;
+import com.vccorp.monngon.model.Mon;
+import com.viewpagerindicator.CirclePageIndicator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,9 +24,12 @@ public class HomeAdapter extends RecyclerView.Adapter {
     private final int VIEW_HEADER = 0;
 
     private List<HomeMenu> MessageList;
+    private MainActivity activity;
 
-    public HomeAdapter(List<HomeMenu> Messages, RecyclerView recyclerView) {
-        MessageList = Messages;
+    public HomeAdapter(List<HomeMenu> Messages, MainActivity activity) {
+        this.MessageList = Messages;
+        this.activity = activity;
+
     }
 
     @Override
@@ -38,6 +44,8 @@ public class HomeAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                       int viewType) {
         RecyclerView.ViewHolder vh;
+        Utils.logE("thaond","onCreateViewHolder ");
+
 
         View v = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.item_home_header, parent, false);
@@ -49,18 +57,14 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        Utils.logE("thaond","onBindViewHolder ");
+
         if (holder instanceof HeaderViewHolder) {
-
+            Utils.logE("thaond","HeaderViewHolder");
             HomeMenu singleMessage = (HomeMenu) MessageList.get(position);
-
-            ((HeaderViewHolder) holder).tvName.setText(singleMessage.getName());
-
-            ((HeaderViewHolder) holder).tvEmailId.setText(singleMessage.getName());
-
-            ((HeaderViewHolder) holder).Message = singleMessage;
-
-        } else {
-            ((ProgressViewHolder) holder).progressBar.setIndeterminate(true);
+            ((HeaderViewHolder) holder).adapter = new MenuTodayAdapter(activity.getSupportFragmentManager(), (ArrayList<Mon>) singleMessage.getListMon());
+            ((HeaderViewHolder) holder).mPager.setAdapter(((HeaderViewHolder) holder).adapter);
+            ((HeaderViewHolder) holder).mIndicator.setViewPager( ((HeaderViewHolder) holder).mPager);
         }
     }
 
@@ -71,52 +75,22 @@ public class HomeAdapter extends RecyclerView.Adapter {
             return MessageList.size();
         }
         return 0;
-
-
     }
 
     //
     public static class HeaderViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvName;
+        private ViewPager mPager;
+        private MenuTodayAdapter adapter;
+        private CirclePageIndicator mIndicator;
 
-        public TextView tvEmailId;
-
-        public Student Message;
 
         public HeaderViewHolder(View v) {
             super(v);
-            tvName = (TextView) v.findViewById(R.id.tvName);
+            mPager = (ViewPager) v.findViewById(R.id.mPager);
 
-            tvEmailId = (TextView) v.findViewById(R.id.tvEmailId);
+            mIndicator = (CirclePageIndicator) v.findViewById(R.id.indicator);
 
-            v.setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(v.getContext(),
-                            "OnClick :" + Message.getName() + " \n " + Message.getName(),
-                            Toast.LENGTH_SHORT).show();
-
-                }
-            });
-            v.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Toast.makeText(v.getContext(),
-                            "OnLongClick :" + Message.getName() + " \n " + Message.getName(),
-                            Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-            });
         }
     }
 
-    public static class ProgressViewHolder extends RecyclerView.ViewHolder {
-        public ProgressBar progressBar;
-
-        public ProgressViewHolder(View v) {
-            super(v);
-            progressBar = (ProgressBar) v.findViewById(R.id.progressBar1);
-        }
-    }
 }

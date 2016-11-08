@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.vccorp.monngon.fragment.ExampleFragment;
 import com.vccorp.monngon.fragment.HomeFragment;
 
 /**
@@ -35,11 +36,11 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
         if (position == 0) {
             fragment = HomeFragment.newInstance();
         } else if (position == 1) {
-            fragment = HomeFragment.newInstance();
+            fragment = ExampleFragment.newInstance();
         } else if (position == 2) {
-            fragment = HomeFragment.newInstance();
+            fragment = ExampleFragment.newInstance();
         } else if (position == 3) {
-            fragment = HomeFragment.newInstance();
+            fragment = ExampleFragment.newInstance();
         }
         return fragment;
     }
