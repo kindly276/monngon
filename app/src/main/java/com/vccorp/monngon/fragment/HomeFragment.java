@@ -10,20 +10,20 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.thaond.library.util.GsonRequest;
 import com.thaond.library.util.Utils;
 import com.vccorp.monngon.MainActivity;
 import com.vccorp.monngon.R;
 import com.vccorp.monngon.adapter.HomeAdapter;
 import com.vccorp.monngon.model.HomeMenu;
 import com.vccorp.monngon.model.HomeReponse;
-import com.vccorp.monngon.util.ApiClient;
-import com.vccorp.monngon.util.ApiInterface;
+import com.vccorp.monngon.util.UrlHelper;
 
 import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
 
 
 /**
@@ -44,7 +44,6 @@ public class HomeFragment extends Fragment {
 
     private RequestQueue queue;
     private HomeAdapter custommerAdapter;
-
     public static HomeFragment newInstance() {
         HomeFragment myFragment = new HomeFragment();
 
@@ -96,45 +95,45 @@ public class HomeFragment extends Fragment {
 
 
     private void doGetListSupportFirst() {
-//        queue = Constants.getQueue(mainActivity);
-//
-//        GsonRequest<ListSupport> postRequest = new GsonRequest<ListSupport>(
-//                Request.Method.GET, UrlHelper.getProducts, ListSupport.class, null, null,
-//                new Response.Listener<ListSupport>() {
-//                    public void onResponse(ListSupport response) {
-//                        processSupportResponse(response);
-//                    }
-//                }, new Response.ErrorListener(
-//
-//        ) {
-//            public void onErrorResponse(VolleyError error) {
-//                isNetworkError = true;
-//                displayCustommertFirst();
-//            }
-//        });
-//        queue.add(postRequest);
+        queue = Utils.getQueue(mainActivity);
 
+        GsonRequest<HomeReponse> postRequest = new GsonRequest<HomeReponse>(
+                Request.Method.GET, UrlHelper.getProducts, HomeReponse.class, null, null,
+                new Response.Listener<HomeReponse>() {
+                    public void onResponse(HomeReponse response) {
+                        processSupportResponse(response);
+                    }
+                }, new Response.ErrorListener(
 
-
-        ApiInterface apiService =
-                ApiClient.getClient().create(ApiInterface.class);
-
-        Call<HomeReponse> call = apiService.getHome();
-        call.enqueue(new Callback<HomeReponse>() {
-
-            @Override
-            public void onResponse(Call<HomeReponse> call, retrofit2.Response<HomeReponse> response) {
-                Utils.logE("thaond","abc"+response.body().toString());
-
-                processSupportResponse(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<HomeReponse> call, Throwable t) {
+        ) {
+            public void onErrorResponse(VolleyError error) {
                 isNetworkError = true;
                 displayCustommertFirst();
             }
         });
+        queue.add(postRequest);
+
+
+
+//        ApiInterface apiService =
+//                ApiClient.getClient().create(ApiInterface.class);
+//
+//        Call<HomeReponse> call = apiService.getHome();
+//        call.enqueue(new Callback<HomeReponse>() {
+//
+//            @Override
+//            public void onResponse(Call<HomeReponse> call, retrofit2.Response<HomeReponse> response) {
+//                Utils.logE("thaond","abc"+response.body().toString());
+//
+//                processSupportResponse(response.body());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<HomeReponse> call, Throwable t) {
+//                isNetworkError = true;
+//                displayCustommertFirst();
+//            }
+//        });
     }
 
 
@@ -187,7 +186,7 @@ public class HomeFragment extends Fragment {
                     if (tmpSupportArrayList.size() > 0) {
                         supportArrayList.clear();
                         supportArrayList.addAll(tmpSupportArrayList);
-                        custommerAdapter.notifyItemInserted(supportArrayList.size());
+                        custommerAdapter.notifyDataSetChanged();
                         pgLoading.setVisibility(View.GONE);
                         txtError.setVisibility(View.GONE);
                         rvSupport.setVisibility(View.VISIBLE);

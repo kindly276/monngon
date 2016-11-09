@@ -71,6 +71,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
+        Utils.logE("thaond","ItemCount");
         if (MessageList != null) {
             return MessageList.size();
         }
