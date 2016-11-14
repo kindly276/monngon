@@ -44,6 +44,7 @@ public class HomeFragment extends Fragment {
 
     private RequestQueue queue;
     private HomeAdapter custommerAdapter;
+
     public static HomeFragment newInstance() {
         HomeFragment myFragment = new HomeFragment();
 
@@ -114,7 +115,6 @@ public class HomeFragment extends Fragment {
         queue.add(postRequest);
 
 
-
 //        ApiInterface apiService =
 //                ApiClient.getClient().create(ApiInterface.class);
 //
@@ -142,9 +142,23 @@ public class HomeFragment extends Fragment {
             tmpSupportArrayList.clear();
             if (messages.getSuccess() == 1) {
                 if (messages.getMons() != null && messages.getMons().size() > 0) {
-                    HomeMenu homeMenu=new HomeMenu();
+                    //type header
+                    HomeMenu homeMenu = new HomeMenu();
+                    homeMenu.setType(HomeAdapter.VIEW_HEADER);
                     homeMenu.setListMon(messages.getMons());
                     tmpSupportArrayList.add(homeMenu);
+
+                    //type material
+                    if(messages.getMaterials()!=null){
+                        HomeMenu homeMaterial = new HomeMenu();
+                        homeMaterial.setType(HomeAdapter.VIEW_MATERIAL);
+                        homeMaterial.setListMaterial(messages.getMaterials());
+                        tmpSupportArrayList.add(homeMaterial);
+                    }
+
+
+
+
                     isNetworkError = false;
                 } else {
                     isNoData = true;

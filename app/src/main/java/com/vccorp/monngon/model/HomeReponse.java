@@ -8,6 +8,15 @@ import java.util.List;
 
 public class HomeReponse extends CommonReponse {
     private List<Mon> mons;
+    private List<Material> materials;
+
+    public List<Material> getMaterials() {
+        return materials;
+    }
+
+    public void setMaterials(List<Material> materials) {
+        this.materials = materials;
+    }
 
     public List<Mon> getMons() {
         return mons;

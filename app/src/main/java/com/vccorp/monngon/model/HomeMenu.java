@@ -9,6 +9,16 @@ import java.util.List;
 public class HomeMenu {
     private int type;//type=0 Mon ngon moi ngay type=1 Home
     private List<Mon> listMon;
+    private List<Material> listMaterial;
+
+
+    public List<Material> getListMaterial() {
+        return listMaterial;
+    }
+
+    public void setListMaterial(List<Material> listMaterial) {
+        this.listMaterial = listMaterial;
+    }
 
     public List<Mon> getListMon() {
         return listMon;
