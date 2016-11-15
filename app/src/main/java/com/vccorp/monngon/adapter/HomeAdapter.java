@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.thaond.library.util.Utils;
 import com.vccorp.monngon.MainActivity;
 import com.vccorp.monngon.R;
+import com.vccorp.monngon.model.Cooking;
 import com.vccorp.monngon.model.HomeMenu;
 import com.vccorp.monngon.model.Material;
 import com.vccorp.monngon.model.Mon;
@@ -25,6 +26,7 @@ import java.util.List;
 public class HomeAdapter extends RecyclerView.Adapter {
     public static final int VIEW_HEADER = 0;
     public static final int VIEW_MATERIAL = 1;
+    public static final int VIEW_COOKING_TYPE = 2;
 
     private List<HomeMenu> MessageList;
     private MainActivity activity;
@@ -37,10 +39,12 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0) {
+        if (MessageList.get(position).getType() == 0) {
+            return VIEW_HEADER;
+        } else if (MessageList.get(position).getType() == 1) {
             return VIEW_HEADER;
         }
-        return VIEW_MATERIAL;
+        return VIEW_COOKING_TYPE;
     }
 
     @Override
@@ -52,6 +56,11 @@ public class HomeAdapter extends RecyclerView.Adapter {
         if (viewType == VIEW_HEADER) {
             View v = LayoutInflater.from(parent.getContext()).inflate(
                     R.layout.item_home_header, parent, false);
+
+            vh = new HeaderViewHolder(v);
+        } else if (viewType == VIEW_COOKING_TYPE) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(
+                    R.layout.item_home_list_cooking_type, parent, false);
 
             vh = new HeaderViewHolder(v);
         } else {
@@ -78,6 +87,10 @@ public class HomeAdapter extends RecyclerView.Adapter {
             List<Material> listMaterial = homeMenu.getListMaterial();
             ListMaterialAdapter adapter = new ListMaterialAdapter(listMaterial, activity);
             ((MaterialViewHolder) holder).recyclerMaterial.setAdapter(adapter);
+        } else if (holder instanceof TypeCookingViewHolder) {
+            List<Cooking> cookings = homeMenu.getCachnaus();
+            ListCookingAdapter adapter = new ListCookingAdapter(cookings, activity);
+            ((TypeCookingViewHolder) holder).recyclerCooking.setAdapter(adapter);
         }
     }
 
@@ -114,7 +127,18 @@ public class HomeAdapter extends RecyclerView.Adapter {
         public MaterialViewHolder(View v) {
             super(v);
             recyclerMaterial = (RecyclerView) v.findViewById(R.id.recycler_material);
-            recyclerMaterial.setLayoutManager(new GridLayoutManager(activity,2));
+            recyclerMaterial.setLayoutManager(new GridLayoutManager(activity, 2));
+        }
+    }
+
+    public class TypeCookingViewHolder extends RecyclerView.ViewHolder {
+        private RecyclerView recyclerCooking;
+
+
+        public TypeCookingViewHolder(View v) {
+            super(v);
+            recyclerCooking = (RecyclerView) v.findViewById(R.id.recycler_cooking);
+            recyclerCooking.setLayoutManager(new GridLayoutManager(activity, 2));
         }
     }
 

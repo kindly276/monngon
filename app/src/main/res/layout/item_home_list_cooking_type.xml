@@ -8,10 +8,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:text="@string/st_material"
+        android:text="@string/st_make_cooking"
         android:textColor="@android:color/holo_red_dark"/>
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_material"
+        android:id="@+id/recycler_cooking"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </LinearLayout>

@@ -9,6 +9,7 @@ import java.util.List;
 public class HomeReponse extends CommonReponse {
     private List<Mon> mons;
     private List<Material> materials;
+    private List<Cooking> cachnaus;
 
     public List<Material> getMaterials() {
         return materials;
@@ -24,5 +25,13 @@ public class HomeReponse extends CommonReponse {
 
     public void setMons(List<Mon> mons) {
         this.mons = mons;
+    }
+
+    public List<Cooking> getCachnaus() {
+        return cachnaus;
+    }
+
+    public void setCachnaus(List<Cooking> cachnaus) {
+        this.cachnaus = cachnaus;
     }
 }

@@ -156,9 +156,13 @@ public class HomeFragment extends Fragment {
                         tmpSupportArrayList.add(homeMaterial);
                     }
 
-
-
-
+                    //type cach nau
+                    if(messages.getCachnaus()!=null){
+                        HomeMenu home = new HomeMenu();
+                        home.setType(HomeAdapter.VIEW_COOKING_TYPE);
+                        home.setCachnaus(messages.getCachnaus());
+                        tmpSupportArrayList.add(home);
+                    }
                     isNetworkError = false;
                 } else {
                     isNoData = true;

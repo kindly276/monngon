@@ -10,6 +10,8 @@ public class HomeMenu {
     private int type;//type=0 Mon ngon moi ngay type=1 Home
     private List<Mon> listMon;
     private List<Material> listMaterial;
+    private List<Cooking> cachnaus;
+
 
 
     public List<Material> getListMaterial() {
@@ -34,5 +36,13 @@ public class HomeMenu {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public List<Cooking> getCachnaus() {
+        return cachnaus;
+    }
+
+    public void setCachnaus(List<Cooking> cachnaus) {
+        this.cachnaus = cachnaus;
     }
 }
