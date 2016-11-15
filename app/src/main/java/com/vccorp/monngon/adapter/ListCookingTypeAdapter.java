@@ -9,20 +9,20 @@ import android.widget.TextView;
 import com.thaond.library.util.Utils;
 import com.vccorp.monngon.MainActivity;
 import com.vccorp.monngon.R;
-import com.vccorp.monngon.model.Material;
+import com.vccorp.monngon.model.Cooking;
 
 import java.util.List;
 
 /**
- * Created by PC0353 on 11/14/2016.
+ * Created by PC0353 on 11/15/2016.
  */
 
-public class ListMaterialAdapter extends RecyclerView.Adapter {
+public class ListCookingTypeAdapter extends RecyclerView.Adapter {
 
-    private List<Material> MessageList;
+    private List<Cooking> MessageList;
     private MainActivity activity;
 
-    public ListMaterialAdapter(List<Material> Messages, MainActivity activity) {
+    public ListCookingTypeAdapter(List<Cooking> Messages, MainActivity activity) {
         this.MessageList = Messages;
         this.activity = activity;
 
@@ -39,7 +39,7 @@ public class ListMaterialAdapter extends RecyclerView.Adapter {
         View v = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.item_list_common, parent, false);
 
-        vh = new HeaderViewHolder(v);
+        vh = new ListMaterialAdapter.HeaderViewHolder(v);
 
         return vh;
     }
@@ -50,8 +50,8 @@ public class ListMaterialAdapter extends RecyclerView.Adapter {
 
         if (holder instanceof HeaderViewHolder) {
             Utils.logE("thaond", "HeaderViewHolder");
-            Material singleMessage = MessageList.get(position);
-            ((HeaderViewHolder) holder).txt_name_category.setText(singleMessage.getName_material());
+            Cooking singleMessage = MessageList.get(position);
+            ((HeaderViewHolder) holder).txt_name_category.setText(singleMessage.getName_cooking_type());
         }
     }
 

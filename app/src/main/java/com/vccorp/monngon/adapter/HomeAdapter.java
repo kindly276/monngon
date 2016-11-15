@@ -89,7 +89,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
             ((MaterialViewHolder) holder).recyclerMaterial.setAdapter(adapter);
         } else if (holder instanceof TypeCookingViewHolder) {
             List<Cooking> cookings = homeMenu.getCachnaus();
-            ListCookingAdapter adapter = new ListCookingAdapter(cookings, activity);
+            ListCookingTypeAdapter adapter = new ListCookingTypeAdapter(cookings, activity);
             ((TypeCookingViewHolder) holder).recyclerCooking.setAdapter(adapter);
         }
     }
