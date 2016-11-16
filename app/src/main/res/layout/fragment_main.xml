@@ -15,7 +15,7 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#333333"
+            android:background="#FF5722"
             android:paddingBottom="2dp"
             android:paddingTop="2dp"
             app:tabGravity="fill"

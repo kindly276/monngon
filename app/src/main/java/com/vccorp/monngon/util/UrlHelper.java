@@ -5,5 +5,7 @@ package com.vccorp.monngon.util;
  */
 
 public class UrlHelper {
-    public static String getProducts="http://mongnon.esy.es/monngon/get_all_products.php";
+//    public static String getProducts="http://mongnon.esy.es/monngon/get_all_products.php";
+//    public static String getProducts="http://mongnon.esy.es/monngon/get_all_products.php";
+//    public static String getProducts="http://mongnon.esy.es/monngon/get_all_products.php";
 }

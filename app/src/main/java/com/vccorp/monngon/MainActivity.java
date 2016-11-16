@@ -14,8 +14,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 
-import com.firebase.client.Firebase;
-import com.vccorp.monngon.fragment.MainFragment;
+import com.vccorp.monngon.fragment.HomeFragment;
+import com.vccorp.monngon.fragment.ListDayCookingFragment;
+import com.vccorp.monngon.fragment.MaterialFragment;
+import com.vccorp.monngon.fragment.TypeCookingFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -36,8 +38,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Firebase.setAndroidContext(this);
-        selectFragment(MainFragment.newInstance());
+        selectFragment(HomeFragment.newInstance());
         // Get a reference to our posts
 
     }
@@ -98,17 +99,17 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_home) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+            selectFragment(HomeFragment.newInstance());
+        } else if (id == R.id.nav_material) {
+            selectFragment(MaterialFragment.newInstance());
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_type_cooking) {
+            selectFragment(TypeCookingFragment.newInstance());
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_day_cooking) {
+            selectFragment(ListDayCookingFragment.newInstance());
 
         }
 

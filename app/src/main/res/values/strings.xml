@@ -13,4 +13,6 @@
     </string-array>
     <string name="st_make_cooking">Cách nấu</string>
     <string name="st_material">Nguyên liệu</string>
+    <string name="st_day_cooking">Dịp nấu</string>
+    <string name="st_home">Trang chủ</string>
 </resources>

@@ -10,20 +10,20 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.thaond.library.util.GsonRequest;
 import com.thaond.library.util.Utils;
 import com.vccorp.monngon.MainActivity;
 import com.vccorp.monngon.R;
 import com.vccorp.monngon.adapter.HomeAdapter;
 import com.vccorp.monngon.model.HomeMenu;
 import com.vccorp.monngon.model.HomeReponse;
-import com.vccorp.monngon.util.UrlHelper;
+import com.vccorp.monngon.util.ApiClient;
+import com.vccorp.monngon.util.ApiInterface;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 
 /**
@@ -96,44 +96,44 @@ public class HomeFragment extends Fragment {
 
 
     private void doGetListSupportFirst() {
-        queue = Utils.getQueue(mainActivity);
-
-        GsonRequest<HomeReponse> postRequest = new GsonRequest<HomeReponse>(
-                Request.Method.GET, UrlHelper.getProducts, HomeReponse.class, null, null,
-                new Response.Listener<HomeReponse>() {
-                    public void onResponse(HomeReponse response) {
-                        processSupportResponse(response);
-                    }
-                }, new Response.ErrorListener(
-
-        ) {
-            public void onErrorResponse(VolleyError error) {
-                isNetworkError = true;
-                displayCustommertFirst();
-            }
-        });
-        queue.add(postRequest);
-
-
-//        ApiInterface apiService =
-//                ApiClient.getClient().create(ApiInterface.class);
+//        queue = Utils.getQueue(mainActivity);
 //
-//        Call<HomeReponse> call = apiService.getHome();
-//        call.enqueue(new Callback<HomeReponse>() {
+//        GsonRequest<HomeReponse> postRequest = new GsonRequest<HomeReponse>(
+//                Request.Method.GET, UrlHelper.getProducts, HomeReponse.class, null, null,
+//                new Response.Listener<HomeReponse>() {
+//                    public void onResponse(HomeReponse response) {
+//                        processSupportResponse(response);
+//                    }
+//                }, new Response.ErrorListener(
 //
-//            @Override
-//            public void onResponse(Call<HomeReponse> call, retrofit2.Response<HomeReponse> response) {
-//                Utils.logE("thaond","abc"+response.body().toString());
-//
-//                processSupportResponse(response.body());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<HomeReponse> call, Throwable t) {
+//        ) {
+//            public void onErrorResponse(VolleyError error) {
 //                isNetworkError = true;
 //                displayCustommertFirst();
 //            }
 //        });
+//        queue.add(postRequest);
+
+
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<HomeReponse> call = apiService.getHome();
+        call.enqueue(new Callback<HomeReponse>() {
+
+            @Override
+            public void onResponse(Call<HomeReponse> call, retrofit2.Response<HomeReponse> response) {
+                Utils.logE("thaond","abc"+response.body().toString());
+
+                processSupportResponse(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<HomeReponse> call, Throwable t) {
+                isNetworkError = true;
+                displayCustommertFirst();
+            }
+        });
     }
 
 
@@ -148,21 +148,21 @@ public class HomeFragment extends Fragment {
                     homeMenu.setListMon(messages.getMons());
                     tmpSupportArrayList.add(homeMenu);
 
-                    //type material
-                    if(messages.getMaterials()!=null){
-                        HomeMenu homeMaterial = new HomeMenu();
-                        homeMaterial.setType(HomeAdapter.VIEW_MATERIAL);
-                        homeMaterial.setListMaterial(messages.getMaterials());
-                        tmpSupportArrayList.add(homeMaterial);
-                    }
-
-                    //type cach nau
-                    if(messages.getCachnaus()!=null){
-                        HomeMenu home = new HomeMenu();
-                        home.setType(HomeAdapter.VIEW_COOKING_TYPE);
-                        home.setCachnaus(messages.getCachnaus());
-                        tmpSupportArrayList.add(home);
-                    }
+//                    //type material
+//                    if(messages.getMaterials()!=null){
+//                        HomeMenu homeMaterial = new HomeMenu();
+//                        homeMaterial.setType(HomeAdapter.VIEW_MATERIAL);
+//                        homeMaterial.setListMaterial(messages.getMaterials());
+//                        tmpSupportArrayList.add(homeMaterial);
+//                    }
+//
+//                    //type cach nau
+//                    if(messages.getCachnaus()!=null){
+//                        HomeMenu home = new HomeMenu();
+//                        home.setType(HomeAdapter.VIEW_COOKING_TYPE);
+//                        home.setCachnaus(messages.getCachnaus());
+//                        tmpSupportArrayList.add(home);
+//                    }
                     isNetworkError = false;
                 } else {
                     isNoData = true;

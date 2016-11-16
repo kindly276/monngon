@@ -10,20 +10,20 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.thaond.library.util.GsonRequest;
 import com.thaond.library.util.Utils;
 import com.vccorp.monngon.MainActivity;
 import com.vccorp.monngon.R;
 import com.vccorp.monngon.adapter.ListMaterialAdapter;
 import com.vccorp.monngon.model.Material;
 import com.vccorp.monngon.model.MaterialReponse;
-import com.vccorp.monngon.util.UrlHelper;
+import com.vccorp.monngon.util.ApiClient;
+import com.vccorp.monngon.util.ApiInterface;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 /**
  * Created by rau muong on 15/11/2016.
@@ -95,44 +95,42 @@ public class MaterialFragment extends Fragment {
 
 
     private void doGetListSupportFirst() {
-        queue = Utils.getQueue(mainActivity);
-
-        GsonRequest<MaterialReponse> postRequest = new GsonRequest<MaterialReponse>(
-                Request.Method.GET, UrlHelper.getProducts, MaterialReponse.class, null, null,
-                new Response.Listener<MaterialReponse>() {
-                    public void onResponse(MaterialReponse response) {
-                        processSupportResponse(response);
-                    }
-                }, new Response.ErrorListener(
-
-        ) {
-            public void onErrorResponse(VolleyError error) {
-                isNetworkError = true;
-                displayCustommertFirst();
-            }
-        });
-        queue.add(postRequest);
-
-
-//        ApiInterface apiService =
-//                ApiClient.getClient().create(ApiInterface.class);
+//        queue = Utils.getQueue(mainActivity);
 //
-//        Call<HomeReponse> call = apiService.getHome();
-//        call.enqueue(new Callback<HomeReponse>() {
+//        GsonRequest<MaterialReponse> postRequest = new GsonRequest<MaterialReponse>(
+//                Request.Method.GET, UrlHelper.getProducts, MaterialReponse.class, null, null,
+//                new Response.Listener<MaterialReponse>() {
+//                    public void onResponse(MaterialReponse response) {
+//                        processSupportResponse(response);
+//                    }
+//                }, new Response.ErrorListener(
 //
-//            @Override
-//            public void onResponse(Call<HomeReponse> call, retrofit2.Response<HomeReponse> response) {
-//                Utils.logE("thaond","abc"+response.body().toString());
-//
-//                processSupportResponse(response.body());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<HomeReponse> call, Throwable t) {
+//        ) {
+//            public void onErrorResponse(VolleyError error) {
 //                isNetworkError = true;
 //                displayCustommertFirst();
 //            }
 //        });
+//        queue.add(postRequest);
+
+
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<MaterialReponse> call = apiService.getMaterial();
+        call.enqueue(new Callback<MaterialReponse>() {
+
+            @Override
+            public void onResponse(Call<MaterialReponse> call, retrofit2.Response<MaterialReponse> response) {
+                processSupportResponse(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<MaterialReponse> call, Throwable t) {
+                isNetworkError = true;
+                displayCustommertFirst();
+            }
+        });
     }
 
 

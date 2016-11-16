@@ -10,20 +10,20 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.thaond.library.util.GsonRequest;
 import com.thaond.library.util.Utils;
 import com.vccorp.monngon.MainActivity;
 import com.vccorp.monngon.R;
 import com.vccorp.monngon.adapter.ListCookingTypeAdapter;
 import com.vccorp.monngon.model.Cooking;
 import com.vccorp.monngon.model.TypeCookingReponse;
-import com.vccorp.monngon.util.UrlHelper;
+import com.vccorp.monngon.util.ApiClient;
+import com.vccorp.monngon.util.ApiInterface;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 /**
  * Created by rau muong on 15/11/2016.
@@ -44,8 +44,8 @@ public class TypeCookingFragment extends Fragment {
     private RequestQueue queue;
     private ListCookingTypeAdapter custommerAdapter;
 
-    public static MaterialFragment newInstance() {
-        MaterialFragment myFragment = new MaterialFragment();
+    public static TypeCookingFragment newInstance() {
+        TypeCookingFragment myFragment = new TypeCookingFragment();
 
         return myFragment;
     }
@@ -95,44 +95,44 @@ public class TypeCookingFragment extends Fragment {
 
 
     private void doGetListSupportFirst() {
-        queue = Utils.getQueue(mainActivity);
-
-        GsonRequest<TypeCookingReponse> postRequest = new GsonRequest<TypeCookingReponse>(
-                Request.Method.GET, UrlHelper.getProducts, TypeCookingReponse.class, null, null,
-                new Response.Listener<TypeCookingReponse>() {
-                    public void onResponse(TypeCookingReponse response) {
-                        processSupportResponse(response);
-                    }
-                }, new Response.ErrorListener(
-
-        ) {
-            public void onErrorResponse(VolleyError error) {
-                isNetworkError = true;
-                displayCustommertFirst();
-            }
-        });
-        queue.add(postRequest);
-
-
-//        ApiInterface apiService =
-//                ApiClient.getClient().create(ApiInterface.class);
+//        queue = Utils.getQueue(mainActivity);
 //
-//        Call<HomeReponse> call = apiService.getHome();
-//        call.enqueue(new Callback<HomeReponse>() {
+//        GsonRequest<TypeCookingReponse> postRequest = new GsonRequest<TypeCookingReponse>(
+//                Request.Method.GET, UrlHelper.getProducts, TypeCookingReponse.class, null, null,
+//                new Response.Listener<TypeCookingReponse>() {
+//                    public void onResponse(TypeCookingReponse response) {
+//                        processSupportResponse(response);
+//                    }
+//                }, new Response.ErrorListener(
 //
-//            @Override
-//            public void onResponse(Call<HomeReponse> call, retrofit2.Response<HomeReponse> response) {
-//                Utils.logE("thaond","abc"+response.body().toString());
-//
-//                processSupportResponse(response.body());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<HomeReponse> call, Throwable t) {
+//        ) {
+//            public void onErrorResponse(VolleyError error) {
 //                isNetworkError = true;
 //                displayCustommertFirst();
 //            }
 //        });
+//        queue.add(postRequest);
+
+
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<TypeCookingReponse> call = apiService.getTypeCooking();
+        call.enqueue(new Callback<TypeCookingReponse>() {
+
+            @Override
+            public void onResponse(Call<TypeCookingReponse> call, retrofit2.Response<TypeCookingReponse> response) {
+                Utils.logE("thaond","abc"+response.body().toString());
+
+                processSupportResponse(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<TypeCookingReponse> call, Throwable t) {
+                isNetworkError = true;
+                displayCustommertFirst();
+            }
+        });
     }
 
 

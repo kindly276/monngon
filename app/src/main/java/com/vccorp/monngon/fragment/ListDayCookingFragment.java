@@ -10,22 +10,20 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.thaond.library.util.GsonRequest;
 import com.thaond.library.util.Utils;
 import com.vccorp.monngon.MainActivity;
 import com.vccorp.monngon.R;
-import com.vccorp.monngon.adapter.ListCookingTypeAdapter;
 import com.vccorp.monngon.adapter.ListDayCookingAdapter;
-import com.vccorp.monngon.model.Cooking;
 import com.vccorp.monngon.model.DayCooking;
-import com.vccorp.monngon.model.TypeCookingReponse;
-import com.vccorp.monngon.util.UrlHelper;
+import com.vccorp.monngon.model.DayCookingReponse;
+import com.vccorp.monngon.util.ApiClient;
+import com.vccorp.monngon.util.ApiInterface;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 /**
  * Created by rau muong on 15/11/2016.
@@ -44,7 +42,7 @@ public class ListDayCookingFragment extends Fragment {
     private ProgressBar pgLoading;
 
     private RequestQueue queue;
-    private ListCookingTypeAdapter custommerAdapter;
+    private ListDayCookingAdapter custommerAdapter;
 
     public static ListDayCookingFragment newInstance() {
         ListDayCookingFragment myFragment = new ListDayCookingFragment();
@@ -97,53 +95,53 @@ public class ListDayCookingFragment extends Fragment {
 
 
     private void doGetListSupportFirst() {
-        queue = Utils.getQueue(mainActivity);
-
-        GsonRequest<TypeCookingReponse> postRequest = new GsonRequest<TypeCookingReponse>(
-                Request.Method.GET, UrlHelper.getProducts, TypeCookingReponse.class, null, null,
-                new Response.Listener<TypeCookingReponse>() {
-                    public void onResponse(TypeCookingReponse response) {
-                        processSupportResponse(response);
-                    }
-                }, new Response.ErrorListener(
-
-        ) {
-            public void onErrorResponse(VolleyError error) {
-                isNetworkError = true;
-                displayCustommertFirst();
-            }
-        });
-        queue.add(postRequest);
-
-
-//        ApiInterface apiService =
-//                ApiClient.getClient().create(ApiInterface.class);
+//        queue = Utils.getQueue(mainActivity);
 //
-//        Call<HomeReponse> call = apiService.getHome();
-//        call.enqueue(new Callback<HomeReponse>() {
+//        GsonRequest<DayCookingReponse> postRequest = new GsonRequest<DayCookingReponse>(
+//                Request.Method.GET, UrlHelper.getProducts, DayCookingReponse.class, null, null,
+//                new Response.Listener<DayCookingReponse>() {
+//                    public void onResponse(DayCookingReponse response) {
+//                        processSupportResponse(response);
+//                    }
+//                }, new Response.ErrorListener(
 //
-//            @Override
-//            public void onResponse(Call<HomeReponse> call, retrofit2.Response<HomeReponse> response) {
-//                Utils.logE("thaond","abc"+response.body().toString());
-//
-//                processSupportResponse(response.body());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<HomeReponse> call, Throwable t) {
+//        ) {
+//            public void onErrorResponse(VolleyError error) {
 //                isNetworkError = true;
 //                displayCustommertFirst();
 //            }
 //        });
+//        queue.add(postRequest);
+
+
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<DayCookingReponse> call = apiService.getDayCooking();
+        call.enqueue(new Callback<DayCookingReponse>() {
+
+            @Override
+            public void onResponse(Call<DayCookingReponse> call, retrofit2.Response<DayCookingReponse> response) {
+                Utils.logE("thaond","abc"+response.body().toString());
+
+                processSupportResponse(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<DayCookingReponse> call, Throwable t) {
+                isNetworkError = true;
+                displayCustommertFirst();
+            }
+        });
     }
 
 
-    private void processSupportResponse(TypeCookingReponse messages) {
+    private void processSupportResponse(DayCookingReponse messages) {
         try {
             tmpSupportArrayList.clear();
             if (messages.getSuccess() == 1) {
-                if (messages.getCachnaus() != null && messages.getCachnaus().size() > 0) {
-                    tmpSupportArrayList.addAll(messages.getCachnaus());
+                if (messages.getDipnaus() != null && messages.getDipnaus().size() > 0) {
+                    tmpSupportArrayList.addAll(messages.getDipnaus());
                     isNetworkError = false;
                 } else {
                     isNoData = true;

@@ -5,8 +5,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.vccorp.monngon.fragment.ExampleFragment;
 import com.vccorp.monngon.fragment.HomeFragment;
+import com.vccorp.monngon.fragment.ListDayCookingFragment;
+import com.vccorp.monngon.fragment.MaterialFragment;
+import com.vccorp.monngon.fragment.TypeCookingFragment;
 
 /**
  * Created by PC0353 on 4/29/2016.
@@ -36,11 +38,11 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
         if (position == 0) {
             fragment = HomeFragment.newInstance();
         } else if (position == 1) {
-            fragment = ExampleFragment.newInstance();
+            fragment = MaterialFragment.newInstance();
         } else if (position == 2) {
-            fragment = ExampleFragment.newInstance();
+            fragment = TypeCookingFragment.newInstance();
         } else if (position == 3) {
-            fragment = ExampleFragment.newInstance();
+            fragment = ListDayCookingFragment.newInstance();
         }
         return fragment;
     }
