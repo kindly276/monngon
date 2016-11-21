@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.kindly.monngon.BR;
 import com.kindly.monngon.MainActivity;
@@ -53,8 +54,7 @@ public class ListMaterialAdapter extends RecyclerView.Adapter {
         if (holder instanceof HeaderViewHolder) {
             Utils.logE("thaond", "HeaderViewHolder");
             Material singleMessage = MessageList.get(position);
-            ((HeaderViewHolder) holder).getBinding().setVariable(BR.material, singleMessage);
-            ((HeaderViewHolder) holder).getBinding().executePendingBindings();
+            ((HeaderViewHolder) holder).txt_name_category.setText(singleMessage.getName_material());
         }
     }
 
@@ -70,16 +70,13 @@ public class ListMaterialAdapter extends RecyclerView.Adapter {
 
     //
     public  class HeaderViewHolder extends RecyclerView.ViewHolder {
-        private ViewDataBinding binding;
+        private TextView txt_name_category;
 
         public HeaderViewHolder(View v) {
             super(v);
-            binding = DataBindingUtil.bind(v);
+            txt_name_category =(TextView)v.findViewById(R.id.txt_name_category);
         }
 
-        public ViewDataBinding getBinding() {
-            return binding;
-        }
     }
 
 }

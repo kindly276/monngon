@@ -14,6 +14,15 @@ public class Mon implements Parcelable {
     private String material;
     private String image;
     private String making;
+    private int type=1;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public int getId() {
         return id;

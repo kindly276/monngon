@@ -38,7 +38,7 @@ public class ListDayCookingAdapter extends RecyclerView.Adapter {
         View v = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.item_list_common, parent, false);
 
-        vh = new ListMaterialAdapter.HeaderViewHolder(v);
+        vh = new HeaderViewHolder(v);
 
         return vh;
     }

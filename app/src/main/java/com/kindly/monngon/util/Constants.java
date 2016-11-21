@@ -6,4 +6,6 @@ package com.kindly.monngon.util;
 
 public class Constants {
     public static final String DATA="data";
+    public static final int NUMBER_PAGE=10;
+    public static final int SUCCESS=1;
 }
