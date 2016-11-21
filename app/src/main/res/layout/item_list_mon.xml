@@ -23,6 +23,8 @@
                 android:id="@+id/txt_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#666666"
+                android:textSize="16sp"
                 android:fontFamily="@string/fontFamily__roboto_regular"
                 android:text="@{mon.title}" />
 
@@ -35,6 +37,9 @@
                 android:id="@+id/txt_des"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#999999"
+                android:maxLines="3"
+                android:textSize="16sp"
                 android:fontFamily="@string/fontFamily__roboto_medium"
                 android:text="@{mon.description}" />
         </LinearLayout>

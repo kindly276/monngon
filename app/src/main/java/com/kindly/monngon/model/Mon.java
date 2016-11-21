@@ -109,4 +109,7 @@ public class Mon implements Parcelable {
         making = in.readString();
 
     }
+
+    public Mon() {
+    }
 }

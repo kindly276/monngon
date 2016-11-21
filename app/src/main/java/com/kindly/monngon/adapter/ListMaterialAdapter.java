@@ -1,16 +1,15 @@
 package com.kindly.monngon.adapter;
 
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.kindly.monngon.BR;
 import com.kindly.monngon.MainActivity;
 import com.kindly.monngon.R;
+import com.kindly.monngon.activity.ListMonActivity;
 import com.kindly.monngon.model.Material;
 import com.thaond.library.util.Utils;
 
@@ -75,6 +74,13 @@ public class ListMaterialAdapter extends RecyclerView.Adapter {
         public HeaderViewHolder(View v) {
             super(v);
             txt_name_category =(TextView)v.findViewById(R.id.txt_name_category);
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(activity, ListMonActivity.class);
+                    activity.startActivity(intent);
+                }
+            });
         }
 
     }

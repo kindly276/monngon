@@ -15,8 +15,6 @@ import com.thaond.library.util.Utils;
 
 import java.util.List;
 
-import static android.databinding.tool.util.GenerationalClassUtil.ExtensionFilter.BR;
-
 /**
  * Created by PC0353 on 11/18/2016.
  */
@@ -25,13 +23,16 @@ public class ListMonAdapter extends RecyclerView.Adapter {
 
     private List<Mon> MessageList;
     private Activity activity;
-    private static final int TYPE_PROGRESS = 0;
-    private static final int TYPE_ITEM = 1;
+    public static final int TYPE_PROGRESS = 0;
+    public static final int TYPE_ITEM = 1;
+    public static final int TYPE_BOTTOM = 2;
 
     @Override
     public int getItemViewType(int position) {
         if (MessageList.get(position).getType() == TYPE_PROGRESS) {
             return TYPE_PROGRESS;
+        }else if (MessageList.get(position).getType() == TYPE_BOTTOM) {
+            return TYPE_BOTTOM;
         } else {
             return TYPE_ITEM;
         }
@@ -72,7 +73,7 @@ public class ListMonAdapter extends RecyclerView.Adapter {
         if (holder instanceof HeaderViewHolder) {
             Utils.logE("thaond", "HeaderViewHolder");
             Mon mon = MessageList.get(position);
-            ((HeaderViewHolder) holder).getBinding().setVariable(BR.mon, mon);
+            ((HeaderViewHolder) holder).getBinding().setVariable(com.kindly.monngon.BR.mon, mon);
             ((HeaderViewHolder) holder).getBinding().executePendingBindings();
 
         }
