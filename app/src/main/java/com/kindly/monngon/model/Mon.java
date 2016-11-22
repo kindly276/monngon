@@ -1,7 +1,11 @@
 package com.kindly.monngon.model;
 
+import android.databinding.BaseObservable;
+import android.graphics.Movie;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.kindly.monngon.BR;
 
 /**
  * Created by PC0353 on 10/20/2016.
@@ -112,4 +116,7 @@ public class Mon implements Parcelable {
 
     public Mon() {
     }
+
+
+
 }

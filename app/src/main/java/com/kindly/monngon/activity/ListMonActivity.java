@@ -1,12 +1,16 @@
 package com.kindly.monngon.activity;
 
+import android.databinding.BindingAdapter;
+import android.databinding.ObservableArrayList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -17,10 +21,8 @@ import com.kindly.monngon.model.Mon;
 import com.kindly.monngon.util.ApiClient;
 import com.kindly.monngon.util.ApiInterface;
 import com.kindly.monngon.util.Constants;
+import com.squareup.picasso.Picasso;
 import com.thaond.library.util.Utils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,9 +34,9 @@ import retrofit2.Callback;
 public class ListMonActivity extends AppCompatActivity {
 
     private RecyclerView rvMon;
-    private LinearLayoutManager mLayoutManager;
-    private List<Mon> listMon;
-    private List<Mon> tmpListMon;
+    private GridLayoutManager mLayoutManager;
+    private ObservableArrayList<Mon> listMon;
+    private ObservableArrayList<Mon> tmpListMon;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private boolean isNetworkError, isNoConnection, isNoData, isUnAuthenticated, isRefresh, isOutOfData, isLoadMore;
@@ -45,6 +47,8 @@ public class ListMonActivity extends AppCompatActivity {
     private int pageId = 1;
     private boolean loading = true;
     int pastVisiblesItems, visibleItemCount, totalItemCount;
+
+
 //    public static ListCustommerFragment newInstance(String sentDate, String name, int idStatus, int isExpried) {
 //        ListCustommerFragment myFragment = new ListCustommerFragment();
 //        Bundle bundle = new Bundle();
@@ -65,7 +69,7 @@ public class ListMonActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_list_mon);
+
         mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout);
         mSwipeRefreshLayout.setColorSchemeResources(
                 R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark,
@@ -74,16 +78,17 @@ public class ListMonActivity extends AppCompatActivity {
         pgLoading = (ProgressBar)findViewById(R.id.pgLoading);
         rvMon = (RecyclerView) findViewById(R.id.rv_mon);
         rvMon.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager = new GridLayoutManager(this,2);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         // use a linear layout manager
         rvMon.setLayoutManager(mLayoutManager);
 
-        listMon = new ArrayList<Mon>();
-        tmpListMon = new ArrayList<Mon>();
+        listMon = new ObservableArrayList<Mon>();
+        tmpListMon = new ObservableArrayList<Mon>();
 
         custommerAdapter =new ListMonAdapter( listMon,ListMonActivity.this);
         rvMon.setAdapter(custommerAdapter);
+        Picasso.with(getApplicationContext()).setIndicatorsEnabled(true);
         initOnClickListener();
         showDoGetListCustommer();
     }
@@ -380,7 +385,13 @@ public class ListMonActivity extends AppCompatActivity {
             isRefresh = false;
         }
     }
-
+    @BindingAdapter({"bind:imageUrl"})
+    public static void loadImage(ImageView view, String url) {
+        Utils.logE("thaond","loadimage");
+        Picasso.with(view.getContext())
+                .load(url).error(R.mipmap.ic_launcher)
+                .into(view);
+    }
 
 
 }

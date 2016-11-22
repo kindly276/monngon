@@ -49,7 +49,6 @@ public class ListMonAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                       int viewType) {
         RecyclerView.ViewHolder vh;
-        Utils.logE("thaond", "onCreateViewHolder ");
         if (viewType == TYPE_ITEM) {
             View v = LayoutInflater.from(parent.getContext()).inflate(
                     R.layout.item_list_mon, parent, false);
@@ -68,11 +67,11 @@ public class ListMonAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Utils.logE("thaond", "onBindViewHolder ");
 
         if (holder instanceof HeaderViewHolder) {
-            Utils.logE("thaond", "HeaderViewHolder");
             Mon mon = MessageList.get(position);
+            Utils.logE("thaond", "image"+mon.getImage());
+
             ((HeaderViewHolder) holder).getBinding().setVariable(com.kindly.monngon.BR.mon, mon);
             ((HeaderViewHolder) holder).getBinding().executePendingBindings();
 
@@ -82,7 +81,6 @@ public class ListMonAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        Utils.logE("thaond", "ItemCount");
         if (MessageList != null) {
             return MessageList.size();
         }
