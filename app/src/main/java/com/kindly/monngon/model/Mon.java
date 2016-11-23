@@ -5,7 +5,6 @@ import android.graphics.Movie;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.kindly.monngon.BR;
 
 /**
  * Created by PC0353 on 10/20/2016.

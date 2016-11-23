@@ -27,4 +27,7 @@
         <item name="windowActionBarOverlay">true</item>
         <item name="colorPrimary">@android:color/transparent</item>
     </style>
+    <style name="ToolbarColoredBackArrow" parent="LibAppTheme">
+        <item name="android:textColorSecondary">@android:color/white</item>
+    </style>
 </resources>

@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.kindly.monngon.R;
+import com.kindly.monngon.handler.Hander;
 import com.kindly.monngon.model.Mon;
 import com.thaond.library.util.ProgressViewHolder;
 import com.thaond.library.util.Utils;
@@ -75,6 +77,9 @@ public class ListMonAdapter extends RecyclerView.Adapter {
             ((HeaderViewHolder) holder).getBinding().setVariable(com.kindly.monngon.BR.mon, mon);
             ((HeaderViewHolder) holder).getBinding().executePendingBindings();
 
+        }else{
+            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
+            layoutParams.setFullSpan(true);
         }
     }
 
@@ -94,6 +99,7 @@ public class ListMonAdapter extends RecyclerView.Adapter {
         public HeaderViewHolder(View v) {
             super(v);
             binding = DataBindingUtil.bind(v);
+            binding.setVariable(com.kindly.monngon.BR.hanlder,new Hander());
         }
 
         public ViewDataBinding getBinding() {

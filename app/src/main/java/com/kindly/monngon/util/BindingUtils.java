@@ -14,9 +14,24 @@ import com.thaond.library.util.Utils;
 public class BindingUtils {
     @BindingAdapter({"bind:imageUrl"})
     public static void loadImage(ImageView view, String url) {
-        Utils.logE("thaond","loadimage");
-        Picasso.with(view.getContext())
-                .load(url).error(R.mipmap.ic_launcher)
-                .into(view);
+        Utils.logE("thaond", "loadimage");
+        if(url!=null&&url.length()>0){
+            Picasso.with(view.getContext())
+                    .load(url).error(R.mipmap.ic_launcher)
+                    .into(view);
+        }
+
     }
+
+//    /**
+//     * Created by U on 6/5/2015.
+//     */
+//    public class BindingUtils {
+//        @BindingAdapter({"bind:imageUrl"})
+//        public static void loadImage(ImageView view, String url) {
+//            if (url != null) {
+//                Picasso.with(view.getContext()).load(url).error(R.mipmap.ic_launcher).into(view);
+//            }
+//        }
+//    }
 }

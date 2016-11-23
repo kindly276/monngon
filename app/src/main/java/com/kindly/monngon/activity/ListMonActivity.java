@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -22,6 +24,7 @@ import com.kindly.monngon.util.ApiClient;
 import com.kindly.monngon.util.ApiInterface;
 import com.kindly.monngon.util.Constants;
 import com.squareup.picasso.Picasso;
+import com.thaond.library.util.SpacesItemDecoration;
 import com.thaond.library.util.Utils;
 
 import retrofit2.Call;
@@ -34,7 +37,7 @@ import retrofit2.Callback;
 public class ListMonActivity extends AppCompatActivity {
 
     private RecyclerView rvMon;
-    private GridLayoutManager mLayoutManager;
+    private StaggeredGridLayoutManager mLayoutManager;
     private ObservableArrayList<Mon> listMon;
     private ObservableArrayList<Mon> tmpListMon;
 
@@ -69,6 +72,14 @@ public class ListMonActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_list_mon);
+        String title=getIntent().getStringExtra(Constants.NAME);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbar.setTitle(title);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout);
         mSwipeRefreshLayout.setColorSchemeResources(
@@ -78,10 +89,11 @@ public class ListMonActivity extends AppCompatActivity {
         pgLoading = (ProgressBar)findViewById(R.id.pgLoading);
         rvMon = (RecyclerView) findViewById(R.id.rv_mon);
         rvMon.setHasFixedSize(true);
-        mLayoutManager = new GridLayoutManager(this,2);
+        mLayoutManager = new StaggeredGridLayoutManager(2,1);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         // use a linear layout manager
         rvMon.setLayoutManager(mLayoutManager);
+        rvMon.addItemDecoration(new SpacesItemDecoration(Utils.getFixedHeight(this,10)));
 
         listMon = new ObservableArrayList<Mon>();
         tmpListMon = new ObservableArrayList<Mon>();
@@ -93,7 +105,24 @@ public class ListMonActivity extends AppCompatActivity {
         showDoGetListCustommer();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.anim_in_back,R.anim.anim_out_back);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     private void initOnClickListener() {
 
@@ -128,10 +157,11 @@ public class ListMonActivity extends AppCompatActivity {
                     public void onScrolled(RecyclerView recyclerView,
                                            int dx, int dy) {
                         super.onScrolled(recyclerView, dx, dy);
-                        mSwipeRefreshLayout.setEnabled(mLayoutManager.findFirstCompletelyVisibleItemPosition() == 0);
+                        int[] firstVisibleItems = null;
+                        mSwipeRefreshLayout.setEnabled(mLayoutManager.findFirstCompletelyVisibleItemPositions(firstVisibleItems)[0] == 0);
                         visibleItemCount = mLayoutManager.getChildCount();
                         totalItemCount = mLayoutManager.getItemCount();
-                        pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+                        pastVisiblesItems = mLayoutManager.findFirstVisibleItemPositions(firstVisibleItems)[0];
                         if (loading) {
                             if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                                 loading = false;
@@ -150,6 +180,7 @@ public class ListMonActivity extends AppCompatActivity {
                         }
                     }
                 });
+
     }
 
 
