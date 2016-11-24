@@ -1,4 +1,4 @@
-package com.kindly.monngon;
+package com.kindly.monngon.activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 
+import com.kindly.monngon.R;
 import com.kindly.monngon.fragment.HomeFragment;
 import com.kindly.monngon.fragment.ListDayCookingFragment;
 import com.kindly.monngon.fragment.MaterialFragment;

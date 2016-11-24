@@ -9,8 +9,9 @@ import java.util.List;
 public class HomeMenu {
     private int type;//type=0 Mon ngon moi ngay type=1 Home
     private List<Mon> listMon;
+    private List<Mon> listMonMost;
     private List<Material> listMaterial;
-    private List<Cooking> cachnaus;
+    private List<CookingType> cachnaus;
 
 
 
@@ -30,6 +31,14 @@ public class HomeMenu {
         this.listMon = listMon;
     }
 
+    public List<Mon> getListMonMost() {
+        return listMonMost;
+    }
+
+    public void setListMonMost(List<Mon> listMonMost) {
+        this.listMonMost = listMonMost;
+    }
+
     public int getType() {
         return type;
     }
@@ -38,11 +47,11 @@ public class HomeMenu {
         this.type = type;
     }
 
-    public List<Cooking> getCachnaus() {
+    public List<CookingType> getCachnaus() {
         return cachnaus;
     }
 
-    public void setCachnaus(List<Cooking> cachnaus) {
+    public void setCachnaus(List<CookingType> cachnaus) {
         this.cachnaus = cachnaus;
     }
 }

@@ -4,11 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 
-    tools:context=".MainActivity">
-
+    tools:context=".activity.MainActivity">
+    <TextView
+        android:id="@+id/txt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#333333"
+        android:fontFamily="@string/fontFamily__roboto_regular"
+        android:textSize="18sp"
+        android:text="@string/st_menu_week"/>
     <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/mPager"
         android:layout_width="match_parent"
+        android:layout_below="@+id/txt_title"
         android:layout_height="240dp" />
 
     <com.viewpagerindicator.CirclePageIndicator

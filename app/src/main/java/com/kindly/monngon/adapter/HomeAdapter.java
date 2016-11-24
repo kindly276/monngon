@@ -1,19 +1,19 @@
 package com.kindly.monngon.adapter;
 
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.thaond.library.util.Utils;
-import com.kindly.monngon.MainActivity;
 import com.kindly.monngon.R;
-import com.kindly.monngon.model.Cooking;
+import com.kindly.monngon.activity.MainActivity;
 import com.kindly.monngon.model.HomeMenu;
-import com.kindly.monngon.model.Material;
 import com.kindly.monngon.model.Mon;
+import com.thaond.library.util.SpacesItemDecoration;
+import com.thaond.library.util.Utils;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
@@ -25,8 +25,7 @@ import java.util.List;
 
 public class HomeAdapter extends RecyclerView.Adapter {
     public static final int VIEW_HEADER = 0;
-    public static final int VIEW_MATERIAL = 1;
-    public static final int VIEW_COOKING_TYPE = 2;
+    public static final int VIEW_MOST = 1;
 
     private List<HomeMenu> MessageList;
     private MainActivity activity;
@@ -41,33 +40,29 @@ public class HomeAdapter extends RecyclerView.Adapter {
     public int getItemViewType(int position) {
         if (MessageList.get(position).getType() == 0) {
             return VIEW_HEADER;
-        } else if (MessageList.get(position).getType() == 1) {
-            return VIEW_HEADER;
+        } else{
+            return VIEW_MOST;
         }
-        return VIEW_COOKING_TYPE;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                       int viewType) {
         RecyclerView.ViewHolder vh;
-        Utils.logE("thaond", "onCreateViewHolder ");
 
         if (viewType == VIEW_HEADER) {
             View v = LayoutInflater.from(parent.getContext()).inflate(
                     R.layout.item_home_header, parent, false);
 
             vh = new HeaderViewHolder(v);
-        } else if (viewType == VIEW_COOKING_TYPE) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.item_home_list_cooking_type, parent, false);
-
-            vh = new HeaderViewHolder(v);
+            Utils.logE("thaond","run1");
         } else {
             View v = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.item_home_list_material, parent, false);
+                    R.layout.item_home_list_mon, parent, false);
 
-            vh = new MaterialViewHolder(v);
+            vh = new MostestViewViewHolder(v);
+            Utils.logE("thaond","run2");
+
         }
 
 
@@ -76,28 +71,25 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Utils.logE("thaond", "onBindViewHolder ");
-        HomeMenu homeMenu = (HomeMenu) MessageList.get(position);
-        if (holder instanceof HeaderViewHolder) {
-            Utils.logE("thaond", "HeaderViewHolder");
-            ((HeaderViewHolder) holder).adapter = new MenuTodayAdapter(activity.getSupportFragmentManager(), (ArrayList<Mon>) homeMenu.getListMon());
-            ((HeaderViewHolder) holder).mPager.setAdapter(((HeaderViewHolder) holder).adapter);
-            ((HeaderViewHolder) holder).mIndicator.setViewPager(((HeaderViewHolder) holder).mPager);
-        } else if (holder instanceof MaterialViewHolder) {
-            List<Material> listMaterial = homeMenu.getListMaterial();
-            ListMaterialAdapter adapter = new ListMaterialAdapter(listMaterial, activity);
-            ((MaterialViewHolder) holder).recyclerMaterial.setAdapter(adapter);
-        } else if (holder instanceof TypeCookingViewHolder) {
-            List<Cooking> cookings = homeMenu.getCachnaus();
-            ListCookingTypeAdapter adapter = new ListCookingTypeAdapter(cookings, activity);
-            ((TypeCookingViewHolder) holder).recyclerCooking.setAdapter(adapter);
+        try {
+            HomeMenu homeMenu = (HomeMenu) MessageList.get(position);
+            if (holder instanceof HeaderViewHolder) {
+                ((HeaderViewHolder) holder).adapter = new MenuTodayAdapter(activity.getSupportFragmentManager(), (ArrayList<Mon>) homeMenu.getListMon());
+                ((HeaderViewHolder) holder).mPager.setAdapter(((HeaderViewHolder) holder).adapter);
+                ((HeaderViewHolder) holder).mIndicator.setViewPager(((HeaderViewHolder) holder).mPager);
+            } else if (holder instanceof MostestViewViewHolder) {
+                List<Mon> listMon = homeMenu.getListMonMost();
+                ListMonAdapter adapter = new ListMonAdapter(listMon, activity);
+                ((MostestViewViewHolder) holder).recyclerMostView.setAdapter(adapter);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
 
     @Override
     public int getItemCount() {
-        Utils.logE("thaond", "ItemCount");
         if (MessageList != null) {
             return MessageList.size();
         }
@@ -120,26 +112,20 @@ public class HomeAdapter extends RecyclerView.Adapter {
         }
     }  //
 
-    public class MaterialViewHolder extends RecyclerView.ViewHolder {
-        private RecyclerView recyclerMaterial;
+    public class MostestViewViewHolder extends RecyclerView.ViewHolder {
+        private RecyclerView recyclerMostView;
 
 
-        public MaterialViewHolder(View v) {
+        public MostestViewViewHolder(View v) {
             super(v);
-            recyclerMaterial = (RecyclerView) v.findViewById(R.id.recycler_material);
-            recyclerMaterial.setLayoutManager(new GridLayoutManager(activity, 2));
+            recyclerMostView = (RecyclerView) v.findViewById(R.id.rv_mon);
+            StaggeredGridLayoutManager mLayoutManager = new StaggeredGridLayoutManager(2,1);
+            mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            // use a linear layout manager
+            recyclerMostView.setLayoutManager(mLayoutManager);
+            recyclerMostView.addItemDecoration(new SpacesItemDecoration(Utils.getFixedHeight(activity,10)));;
         }
     }
 
-    public class TypeCookingViewHolder extends RecyclerView.ViewHolder {
-        private RecyclerView recyclerCooking;
-
-
-        public TypeCookingViewHolder(View v) {
-            super(v);
-            recyclerCooking = (RecyclerView) v.findViewById(R.id.recycler_cooking);
-            recyclerCooking.setLayoutManager(new GridLayoutManager(activity, 2));
-        }
-    }
 
 }

@@ -12,10 +12,10 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.thaond.library.util.Utils;
-import com.kindly.monngon.MainActivity;
+import com.kindly.monngon.activity.MainActivity;
 import com.kindly.monngon.R;
 import com.kindly.monngon.adapter.ListCookingTypeAdapter;
-import com.kindly.monngon.model.Cooking;
+import com.kindly.monngon.model.CookingType;
 import com.kindly.monngon.model.TypeCookingReponse;
 import com.kindly.monngon.util.ApiClient;
 import com.kindly.monngon.util.ApiInterface;
@@ -34,8 +34,8 @@ public class TypeCookingFragment extends Fragment {
     private MainActivity mainActivity;
     private RecyclerView rvSupport;
     private LinearLayoutManager mLayoutManager;
-    private ArrayList<Cooking> supportArrayList;
-    private ArrayList<Cooking> tmpSupportArrayList;
+    private ArrayList<CookingType> supportArrayList;
+    private ArrayList<CookingType> tmpSupportArrayList;
 
     private boolean isNetworkError, isNoConnection, isNoData;
     private TextView txtError;
@@ -66,8 +66,8 @@ public class TypeCookingFragment extends Fragment {
         // use a linear layout manager
         rvSupport.setLayoutManager(mLayoutManager);
 
-        supportArrayList = new ArrayList<Cooking>();
-        tmpSupportArrayList = new ArrayList<Cooking>();
+        supportArrayList = new ArrayList<CookingType>();
+        tmpSupportArrayList = new ArrayList<CookingType>();
         custommerAdapter = new ListCookingTypeAdapter(supportArrayList, mainActivity);
         rvSupport.setAdapter(custommerAdapter);
         initOnClickListener();

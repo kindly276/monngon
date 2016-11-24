@@ -1,15 +1,18 @@
 package com.kindly.monngon.adapter;
 
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.thaond.library.util.Utils;
-import com.kindly.monngon.MainActivity;
+import com.kindly.monngon.BR;
 import com.kindly.monngon.R;
+import com.kindly.monngon.activity.MainActivity;
+import com.kindly.monngon.handler.Hander;
 import com.kindly.monngon.model.DayCooking;
+import com.thaond.library.util.Utils;
 
 import java.util.List;
 
@@ -36,7 +39,7 @@ public class ListDayCookingAdapter extends RecyclerView.Adapter {
 
 
         View v = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.item_list_common, parent, false);
+                R.layout.item_list_daycooking, parent, false);
 
         vh = new HeaderViewHolder(v);
 
@@ -50,7 +53,8 @@ public class ListDayCookingAdapter extends RecyclerView.Adapter {
         if (holder instanceof HeaderViewHolder) {
             Utils.logE("thaond", "HeaderViewHolder");
             DayCooking singleMessage = MessageList.get(position);
-            ((HeaderViewHolder) holder).txt_name_category.setText(singleMessage.getName_dipnau());
+            ((HeaderViewHolder) holder).getBinding().setVariable(BR.daycooking, singleMessage);
+            ((HeaderViewHolder) holder).getBinding().executePendingBindings();
         }
     }
 
@@ -65,14 +69,21 @@ public class ListDayCookingAdapter extends RecyclerView.Adapter {
     }
 
     //
-    public static class HeaderViewHolder extends RecyclerView.ViewHolder {
-        private TextView txt_name_category;
+    public class HeaderViewHolder extends RecyclerView.ViewHolder {
+        ViewDataBinding binding;
 
         public HeaderViewHolder(View v) {
             super(v);
-            txt_name_category = (TextView) v.findViewById(R.id.txt_name_category);
+            binding = DataBindingUtil.bind(v);
+            binding.setVariable(com.kindly.monngon.BR.hanlder,new Hander());
+        }
 
+        public ViewDataBinding getBinding() {
+            return binding;
+        }
 
+        public void setBinding(ViewDataBinding binding) {
+            this.binding = binding;
         }
     }
 

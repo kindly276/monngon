@@ -16,4 +16,6 @@
     <string name="st_day_cooking">Dịp nấu</string>
     <string name="st_home">Trang chủ</string>
     <string name="st_intro">Giới thiệu</string>
+    <string name="st_menu_week">Thực đơn 7 ngày</string>
+    <string name="st_mon_popular">Món phổ biến nhât</string>
 </resources>

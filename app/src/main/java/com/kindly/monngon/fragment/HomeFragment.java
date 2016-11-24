@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.thaond.library.util.Utils;
-import com.kindly.monngon.MainActivity;
+import com.kindly.monngon.activity.MainActivity;
 import com.kindly.monngon.R;
 import com.kindly.monngon.adapter.HomeAdapter;
 import com.kindly.monngon.model.HomeMenu;
@@ -147,6 +147,13 @@ public class HomeFragment extends Fragment {
                     homeMenu.setType(HomeAdapter.VIEW_HEADER);
                     homeMenu.setListMon(messages.getMons());
                     tmpSupportArrayList.add(homeMenu);
+                    if (messages.getMons() != null && messages.getMons().size() > 0) {
+                        HomeMenu homeMost = new HomeMenu();
+                        homeMost.setType(HomeAdapter.VIEW_MOST);
+                        homeMost.setListMonMost(messages.getMonviews());
+                        tmpSupportArrayList.add(homeMost);
+
+                    }
 
 //                    //type material
 //                    if(messages.getMaterials()!=null){

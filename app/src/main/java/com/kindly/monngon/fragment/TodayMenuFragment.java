@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.thaond.library.util.Utils;
-import com.kindly.monngon.MainActivity;
+import com.kindly.monngon.activity.MainActivity;
 import com.kindly.monngon.R;
 import com.kindly.monngon.activity.DetailMonActivity;
 import com.kindly.monngon.model.Mon;

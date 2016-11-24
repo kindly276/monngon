@@ -8,15 +8,15 @@ import java.util.List;
 
 public class HomeReponse extends CommonReponse {
     private List<Mon> mons;
-    private List<Material> materials;
-    private List<Cooking> cachnaus;
+    private List<Mon> monviews;
 
-    public List<Material> getMaterials() {
-        return materials;
+
+    public List<Mon> getMonviews() {
+        return monviews;
     }
 
-    public void setMaterials(List<Material> materials) {
-        this.materials = materials;
+    public void setMonviews(List<Mon> monviews) {
+        this.monviews = monviews;
     }
 
     public List<Mon> getMons() {
@@ -27,11 +27,5 @@ public class HomeReponse extends CommonReponse {
         this.mons = mons;
     }
 
-    public List<Cooking> getCachnaus() {
-        return cachnaus;
-    }
 
-    public void setCachnaus(List<Cooking> cachnaus) {
-        this.cachnaus = cachnaus;
-    }
 }

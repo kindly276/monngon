@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.thaond.library.util.Utils;
-import com.kindly.monngon.MainActivity;
+import com.kindly.monngon.activity.MainActivity;
 import com.kindly.monngon.R;
 import com.kindly.monngon.adapter.ListDayCookingAdapter;
 import com.kindly.monngon.model.DayCooking;
