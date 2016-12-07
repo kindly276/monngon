@@ -6,7 +6,6 @@ import com.kindly.monngon.model.MaterialReponse;
 import com.kindly.monngon.model.TypeCookingReponse;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -31,5 +30,5 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("get_mons.php")
-    Call<HomeReponse> getMons(@Field("page") int page, @Field("num_page") int num_page);
+    Call<HomeReponse> getMons(@Field("page") int page, @Field("num_page") int num_page,@Field("type") int type,@Field("id") int id);
 }

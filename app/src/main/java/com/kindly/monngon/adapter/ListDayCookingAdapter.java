@@ -75,7 +75,7 @@ public class ListDayCookingAdapter extends RecyclerView.Adapter {
         public HeaderViewHolder(View v) {
             super(v);
             binding = DataBindingUtil.bind(v);
-            binding.setVariable(com.kindly.monngon.BR.hanlder,new Hander());
+            binding.setVariable(com.kindly.monngon.BR.hander,new Hander());
         }
 
         public ViewDataBinding getBinding() {

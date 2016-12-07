@@ -27,13 +27,14 @@ public class Hander {
      * @param id
      * @param name
      */
-    public void onCategoryClick(View view, String id, String name){
-        Log.e("thaond","task");
+    public void onCategoryClick(View view, String id, String name, int type){
+        Log.e("thaond","task------->:"+id);
 
         Context context = view.getContext();
         Intent intent = new Intent(context, ListMonActivity.class);
         intent.putExtra(Constants.NAME, name);
-        intent.putExtra(Constants.ID, id);
+        intent.putExtra(Constants.ID, Integer.valueOf(id));
+        intent.putExtra(Constants.TYPE, type);
 
 
 

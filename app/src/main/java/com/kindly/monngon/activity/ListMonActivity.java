@@ -50,7 +50,8 @@ public class ListMonActivity extends AppCompatActivity {
     private int pageId = 1;
     private boolean loading = true;
     int pastVisiblesItems, visibleItemCount, totalItemCount;
-
+    private int idType;
+    private int idMon;
 
 //    public static ListCustommerFragment newInstance(String sentDate, String name, int idStatus, int isExpried) {
 //        ListCustommerFragment myFragment = new ListCustommerFragment();
@@ -74,6 +75,8 @@ public class ListMonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_mon);
         String title=getIntent().getStringExtra(Constants.NAME);
+        idType=getIntent().getIntExtra(Constants.TYPE,0);
+        idMon=getIntent().getIntExtra(Constants.ID,0);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -205,8 +208,8 @@ public class ListMonActivity extends AppCompatActivity {
 //        }
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-
-        Call<HomeReponse> call = apiService.getMons(pageId,Constants.NUMBER_PAGE);
+        Utils.logE("thaond","idType: "+ idType+"idMon: "+idMon);
+        Call<HomeReponse> call = apiService.getMons(pageId,Constants.NUMBER_PAGE,idType,idMon);
         call.enqueue(new Callback<HomeReponse>() {
 
             @Override
@@ -305,7 +308,7 @@ public class ListMonActivity extends AppCompatActivity {
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
-        Call<HomeReponse> call = apiService.getMons(pageId,Constants.NUMBER_PAGE);
+        Call<HomeReponse> call = apiService.getMons(pageId,Constants.NUMBER_PAGE,idType,idMon);
         call.enqueue(new Callback<HomeReponse>() {
 
             @Override
