@@ -49,10 +49,8 @@ public class MainActivity extends AppCompatActivity
             inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        String backStateName = fragment.getClass().getName();
 
         transaction.replace(R.id.content_frame, fragment);
-        transaction.addToBackStack(backStateName);
         transaction.commit();
 //        overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
 //        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
