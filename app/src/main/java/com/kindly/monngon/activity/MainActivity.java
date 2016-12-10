@@ -14,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.kindly.monngon.R;
 import com.kindly.monngon.fragment.HomeFragment;
 import com.kindly.monngon.fragment.ListDayCookingFragment;
@@ -22,7 +24,8 @@ import com.kindly.monngon.fragment.TypeCookingFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    private AdView avBanner;
+    private AdRequest adRequest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +43,11 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         selectFragment(HomeFragment.newInstance());
+        avBanner =(AdView)findViewById(R.id.av_banner);
+
+        adRequest = new AdRequest.Builder().build();
+        //load ads
+        avBanner.loadAd(adRequest);
         // Get a reference to our posts
 
     }

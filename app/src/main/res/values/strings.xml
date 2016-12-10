@@ -18,4 +18,8 @@
     <string name="st_intro">Giới thiệu</string>
     <string name="st_menu_week">Thực đơn 7 ngày</string>
     <string name="st_mon_popular">Món phổ biến nhât</string>
+
+    <!--Ad unit-->
+    <string name="ad_unit_banner">ca-app-pub-2178077540248679/9797319740</string>
+    <string name="ad_unit_full">ca-app-pub-2178077540248679/2274052946</string>
 </resources>
