@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.thaond.library.util.Utils;
 import com.kindly.monngon.R;
 import com.kindly.monngon.model.Mon;
@@ -20,7 +22,8 @@ import com.kindly.monngon.util.Constants;
 public class DetailMonActivity extends AppCompatActivity {
     private ImageView imageMon;
     private TextView txtDescription, txtMaterial, txtCachnau;
-
+    private AdView avBanner;
+    private AdRequest adRequest;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +45,13 @@ public class DetailMonActivity extends AppCompatActivity {
         txtMaterial.setText(mon.getMaterial());
         txtCachnau.setText(mon.getMaking());
         Utils.loadImage(DetailMonActivity.this, imageMon, mon.getImage());
+
+
+        avBanner =(AdView)findViewById(R.id.av_banner);
+
+        adRequest = new AdRequest.Builder().build();
+        //load ads
+        avBanner.loadAd(adRequest);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

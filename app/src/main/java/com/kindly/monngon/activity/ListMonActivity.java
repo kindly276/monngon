@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.kindly.monngon.R;
 import com.kindly.monngon.adapter.ListMonAdapter;
 import com.kindly.monngon.model.HomeReponse;
@@ -53,6 +55,9 @@ public class ListMonActivity extends AppCompatActivity {
     private int idType;
     private int idMon;
 
+    private AdView avBanner;
+    private AdRequest adRequest;
+
 //    public static ListCustommerFragment newInstance(String sentDate, String name, int idStatus, int isExpried) {
 //        ListCustommerFragment myFragment = new ListCustommerFragment();
 //        Bundle bundle = new Bundle();
@@ -83,7 +88,11 @@ public class ListMonActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar.setTitle(title);
+        avBanner =(AdView)findViewById(R.id.av_banner);
 
+        adRequest = new AdRequest.Builder().build();
+        //load ads
+        avBanner.loadAd(adRequest);
         mSwipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout);
         mSwipeRefreshLayout.setColorSchemeResources(
                 R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark,
